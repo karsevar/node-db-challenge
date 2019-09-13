@@ -7,7 +7,7 @@ exports.up = function(knex) {
             .notNullable()
         tbl.text('description');
         tbl.boolean('completed')
-            .defaultTo('false')
+            .defaultTo(false)
     })
     .createTable('resources', tbl => {
         tbl.increments();
@@ -21,7 +21,7 @@ exports.up = function(knex) {
             .notNullable()
         tbl.text('notes')
         tbl.boolean('completed') 
-            .defaultTo('false')
+            .defaultTo(false)
         tbl.integer('project_id')
             .notNullable()
             .unsigned()
