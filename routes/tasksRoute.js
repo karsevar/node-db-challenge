@@ -40,14 +40,14 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/:id', (req, res) => {
-    const taskPost = req.body;
-    taskPost.project_id = req.params.id
-    console.log(taskPost)
-    tasksDb.postTask(taskPost)
+    const newTask = req.body;
+    newTask.project_id = req.params.id;
+
+    tasksDb.postTask(newTask)
         .then(results => {
             res.status(200).json(results)
         })
-        .then(error => {
+        .catch(error => {
             res.status(500).json(error)
         })
 });
