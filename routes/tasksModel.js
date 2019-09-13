@@ -3,7 +3,7 @@ const db = require('../data/db-config.js');
 function getTasks() {
     return db('tasks as t')
         .join('projects as p', 't.project_id', '=', 'p.id')
-        .select('t.id', 't.description', 't.completed', 't.notes', 'p.project_name', 'p.description') 
+        .select('t.id', 't.description', 't.completed', 't.notes', 'p.project_name', 'p.project_description') 
 }
 
 function getTasksByProjectId(project_id) {
