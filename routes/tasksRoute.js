@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
         })
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', validateProjectId, (req, res) => {
     tasksDb.getTasksByProjectId(req.params.id)
         .then(results => {
             const newResults = results.map(result => {
@@ -39,7 +39,7 @@ router.get('/:id', (req, res) => {
         })
 });
 
-router.post('/:id', (req, res) => {
+router.post('/:id', validateProjectId, (req, res) => {
     const newTask = req.body;
     newTask.project_id = req.params.id;
 
@@ -51,5 +51,18 @@ router.post('/:id', (req, res) => {
             res.status(500).json(error)
         })
 });
+
+//middleware 
+function validateProjectId(req, res, next) {
+    tasksDb.getProjectById(req.params.id)
+        .then(results => {
+            console.log(results)
+            if(results.length > 0) {
+                next();
+            } else {
+                res.status(400).json({message: 'invalidate project id'})
+            }
+        })
+}
 
 module.exports = router;

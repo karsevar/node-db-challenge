@@ -17,4 +17,8 @@ function postTask(taskPost) {
     return db('tasks').insert(taskPost)
 }
 
-module.exports = {getTasks, getTasksByProjectId, postTask}
+function getProjectById(project_id) {
+    return db('projects').where({id: project_id})
+}
+
+module.exports = {getTasks, getTasksByProjectId, postTask, getProjectById}
