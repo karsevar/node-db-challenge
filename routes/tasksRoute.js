@@ -6,7 +6,15 @@ const router = express.Router();
 router.get('/', (req, res) => {
     tasksDb.getTasks()
         .then(results => {
-            res.status(200).json(results)
+            const newResults = results.map(result => {
+                if (result.completed === null || result.completed === 0) {
+                    return {...result, completed: false}
+                } else {
+                    return {...result, completed: true}
+                }
+            })
+
+            res.status(200).json(newResults)
         })
         .catch(error => {
             res.status(500).json(error)
@@ -16,7 +24,15 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
     tasksDb.getTasksByProjectId(req.params.id)
         .then(results => {
-            res.status(200).json(results)
+            const newResults = results.map(result => {
+                if (result.completed === null || result.completed === 0) {
+                    return {...result, completed: false}
+                } else {
+                    return {...result, completed: true}
+                }
+            })
+
+            res.status(200).json(newResults)
         })
         .catch(error => {
             res.status(500).json(error)
